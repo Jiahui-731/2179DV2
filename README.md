@@ -90,27 +90,6 @@ python3 -m http.server 8765
 open http://localhost:8765/
 ```
 
-## Methodology notes
-
-- **Detection limit handling**: EPA reports some values as below a stated limit
-  (for example `<10`, `<20`, `<38`, or `<130`). Each censored row is recoded to
-  half of its own reported limit, the standard convention for censored bacterial data.
-- **Site ID merging**: EPA renumbered the Portarlington site in October 2022
-  (`99760` → `99761`). The two IDs are merged to a single beach for time-series
-  continuity.
-- **Region assignment**: Regions are assigned from an explicit EPA `site_id` map,
-  rather than inferred from latitude/longitude thresholds.
-- **Routine samples**: Headline aggregates (`beach_summary`, `monthly_by_beach`,
-  `rainfall_impact`, `decision_matrix`, `year_month_calendar`, and
-  `region_summary`) use scheduled Routine samples only. Resamples remain in
-  `master.csv` but are excluded from those summaries to avoid double-counting
-  follow-up tests triggered by known incidents.
-- **Safety thresholds**: EPA Beach Action Values used throughout — Good ≤ 35,
-  Caution 35-200, Poor > 200 organisms / 100mL. The 200 cutoff is used here as
-  a single-sample threshold; this project does not compute rolling geomeans.
-- **Rainfall lag**: Each sample is matched against rainfall from the previous
-  day at Melbourne Olympic Park, the closest BOM station to the bay's eastern shore.
-  This single-gauge approximation cannot capture local showers at every beach.
 
 ## AI acknowledgment
 
